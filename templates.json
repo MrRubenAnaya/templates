@@ -1,0 +1,951 @@
+{
+    "version": "3",
+    "templates": [
+      {
+        "type": 1,
+        "title": "Actual Budget",
+        "name": "actual-budget",
+        "platform": "linux",
+        "categories": [
+          "Finances"
+        ],
+        "description": "Actual is a super fast privacy-focused app for managing your finances. You own your data, and we will sync it across all devices with optional end-to-end encryption.",
+        "note": "<b> https://actualbudget.com/ </b><p>GitHub Link: https://github.com/actualbudget/actual",
+        "restart_policy": "unless-stopped",
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/actual-budget/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Aria2",
+        "name": "aria2-ng",
+        "platform": "linux",
+        "categories": [
+          "Downloader"
+        ],
+        "description": "AriaNg is a modern web frontend making aria2 easier to use. AriaNg is written in pure html & javascript, thus it does not need any compilers or runtime environment. You can just put AriaNg in your web server and open it in your browser. AriaNg uses responsive layout, and supports any desktop or mobile devices.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/ariang.png",
+        "ports": [
+          "6800:6800",
+          "6888:6888",
+          "6888:6888/tcp"
+        ],
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "PUID",
+            "label": "PUID",
+            "default": "1000"
+          },
+          {
+            "name": "PGID",
+            "label": "PGID",
+            "default": "1000"
+          },
+          {
+            "name": "ARIA2RPCPORT",
+            "label": "ARIA2RPCPORT",
+            "default": "6800"
+          }
+        ],
+        "volumes": [
+          {
+            "bind": "/apps/aria/config",
+            "container": "/config"
+          },
+          {
+            "bind": "/apps/aria/Downloads",
+            "container": "/downloads"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/aria2/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Cabernet",
+        "name": "cabernet",
+        "platform": "linux",
+        "categories": [
+          "TV, Movies, Media, Live, Entertainment"
+        ],
+        "description": "Cabernet allows control of IPTV streams. Plugins supports DaddyLive, Pluto TV, XUMO, M3U/XMLTV.XML files (SamsungTV, STIRR, DistroTV, Plex TV)",
+        "ports": [
+          "5004:5004",
+          "6077:6077",
+          "65001:65001"
+        ],
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/cabernet/app",
+            "container": "/app"
+          },
+          {
+            "bind": "/apps/cabernet/.cabernet/key.txt",
+            "container": "/root/.cabernet/key.txt"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/cabernet/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Change Detection",
+        "name": "changedetection",
+        "platform": "linux",
+        "categories": [
+          "Monitoring"
+        ],
+        "description": "Cabernet allows Page change monitoring with alerts a breeze. The best way to monitor website changes.",
+        "ports": [
+          "4000:5000"
+        ],
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "PUID",
+            "label": "PUID",
+            "default": "1000"
+          },
+          {
+            "name": "PGID",
+            "label": "PGID",
+            "default": "1000"
+          },
+          {
+            "name": "BASE_URL",
+            "label": "BASE_URL",
+            "default": "https://change.server.local"
+          },
+          {
+            "name": "PLAYWRIGHT_DRIVER_URL",
+            "label": "PLAYWRIGHT_DRIVER_URL",
+            "default": "ws://<ip_address>:<port>?token=<token>&stealth=1&--disable-web-security=true"
+          }
+        ],
+        "volumes": [
+          {
+            "bind": "/apps/changedetection/config",
+            "container": "/config"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/change-detection/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Code Server",
+        "name": "code-server",
+        "platform": "linux",
+        "categories": [
+          "Other",
+          "Tools",
+          "Development"
+        ],
+        "description": "Run VS Code on any machine anywhere and access it in the browser.",
+        "logo": "https://github.com/novaspirit/pi-hosted/blob/master/images/code-server.png",
+        "ports": [
+          "5555:8443"
+        ],
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "PUID",
+            "label": "PUID",
+            "default": "1000"
+          },
+          {
+            "name": "PGID",
+            "label": "PGID",
+            "default": "1000"
+          },
+          {
+            "name": "PASSWORD",
+            "label": "PASSWORD",
+            "default": "password"
+          },
+          {
+            "name": "HASHED_PASSWORD",
+            "label": "HASHED_PASSWORD",
+            "default": ""
+          },
+          {
+            "name": "SUDO_PASSWORD",
+            "label": "SUDO_PASSWORD",
+            "default": "password"
+          },
+          {
+            "name": "SUDO_PASSWORD_HASH",
+            "label": "SUDO_PASSWORD_HASH",
+            "default": ""
+          },
+          {
+            "name": "PROXY_DOMAIN",
+            "label": "PROXY_DOMAIN",
+            "default": "https://code.server.local"
+          },
+          {
+            "name": "DEFAULT_WORKSPACE",
+            "label": "DEFAULT_WORKSPACE",
+            "default": "/config/workspace"
+          }
+        ],
+        "volumes": [
+          {
+            "bind": "/apps/vscode/config",
+            "container": "/config"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/code-server/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Deemix",
+        "name": "deemix",
+        "platform": "linux",
+        "categories": [
+          "Other",
+          "Music"
+        ],
+        "description": "Deemix is a deezer downloader built from the ashes of Deezloader Remix.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/deemix.png",
+        "ports": [
+          "9696:6595/tcp"
+        ],
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/deemix/config",
+            "container": "/config"
+          },
+          {
+            "bind": "/apps/deemix/downloads",
+            "container": "/downloads"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/deemix/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Deluge",
+        "name": "deluge",
+        "platform": "linux",
+        "categories": [
+          "Downloader"
+        ],
+        "description": "Deluge is a lightweight, Free Software, cross-platform BitTorrent client providing: Full Encryption, WebUI, Plugin System, Much more...",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/deluge-icon.png",
+        "ports": [
+          "6881:6881/tcp",
+          "8112:8112/tcp"
+        ],
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "PUID",
+            "label": "PUID",
+            "default": "1000"
+          },
+          {
+            "name": "PGID",
+            "label": "PGID",
+            "default": "1000"
+          },
+          {
+            "name": "UMASK",
+            "label": "UMASK",
+            "default": "022"
+          }
+        ],
+        "volumes": [
+          {
+            "bind": "/apps/deluge/config",
+            "container": "/config"
+          },
+          {
+            "bind": "/apps/deluge/downloads",
+            "container": "/downloads"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/deluge/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "File Browser",
+        "name": "filebrowser",
+        "platform": "linux",
+        "categories": [
+          "Other",
+          "Tools"
+        ],
+        "description": "Web File Browser which can be used as a middleware or standalone app.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/filebrowser.png",
+        "ports": [
+          "9999:80/tcp"
+        ],
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/filebrowser/config/settings.json",
+            "container": "/config/settings.json"
+          },
+          {
+            "bind": "/apps/filebrowser/database/filebrowser.db",
+            "container": "/database/filebrowser.db"
+          },
+          {
+            "bind": "/apps/filebrowser/downloads",
+            "container": "/srv"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/filebrowser/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Guacamole",
+        "name": "guacamole",
+        "platform": "linux",
+        "categories": [
+          "Dashboard"
+        ],
+        "description": "A clientless remote desktop gateway.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/guacamole.png",
+        "ports": [
+          "2000:8080/tcp"
+        ],
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/guacamole/config",
+            "container": "/config"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/guacamole/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Homepage",
+        "name": "homepage",
+        "platform": "linux",
+        "categories": [
+          "Dashboard"
+        ],
+        "description": "Homepage helps you organize your self-hosted services by making them accessible from a single place.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/homepage.png",
+        "ports": [
+          "3000:3000/tcp"
+        ],
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/homepage/config",
+            "container": "/app/config"
+          },
+          {
+            "bind": "/var/run/docker.sock",
+            "container": "/var/run/docker.sock"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/homepage/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Home Assistant",
+        "name": "home-assistant",
+        "platform": "linux",
+        "categories": [
+          "Automation",
+          "Home"
+        ],
+        "description": "Home Assistant is a free and open-source software for home automation that is designed to be the central control system for smart home devices with focus on local control and privacy.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/homeassistant.png",
+        "ports": [
+          "8999:8123/tcp"
+        ],
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/home-assistant/config",
+            "container": "/config"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/home-assistant/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "IT Tools",
+        "name": "it-tools",
+        "platform": "linux",
+        "categories": [
+          "Developer",
+          "Tools",
+          "Other"
+        ],
+        "description": "Handy tools for developers",
+        "logo": "https://github.com/CorentinTh/it-tools/blob/main/.github/logo.png",
+        "ports": [
+          "3010:80"
+        ],
+        "restart_policy": "unless-stopped",
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/it-tools/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "JDownloader 2",
+        "name": "jdownloader",
+        "platform": "linux",
+        "categories": [
+          "Downloader"
+        ],
+        "description": "JDownloader is a free download-manager that makes downloading as easy, fast and automated as it should be.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/jdownloader.png",
+        "ports": [
+          "5800:5800"
+        ],
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/jdownloader-2/config",
+            "container": "/config:rw"
+          },
+          {
+            "bind": "/apps/jdownloader-2/downloads",
+            "container": "/output:rw"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/jdownloader/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Jellyfin",
+        "name": "jellyfin",
+        "platform": "linux",
+        "categories": [
+          "Video",
+          "TV",
+          "Movies",
+          "Media",
+          "Live",
+          "Entertainment"
+        ],
+        "description": "Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media. It is an alternative to the proprietary Emby and Plex, to provide media from a dedicated server to end-user devices via multiple apps.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/jellyfin.png",
+        "ports": [
+          "5000:8096/tcp",
+          "5001:8920/tcp"
+        ],
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "PUID",
+            "label": "PUID",
+            "default": "1000"
+          },
+          {
+            "name": "PGID",
+            "label": "PGID",
+            "default": "1000"
+          },
+          {
+            "name": "TZ",
+            "label": "TZ",
+            "default": "America/Phoenix"
+          }
+        ],
+        "volumes": [
+          {
+            "bind": "/apps/jellyfin/config",
+            "container": "/config"
+          },
+          {
+            "bind": "/apps/jellyfin/movies",
+            "container": "/data/movies"
+          },
+          {
+            "bind": "/apps/jellyfin/tvshows",
+            "container": "/data/tvshows"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/jellyfin/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "JellyPlex Watched",
+        "name": "jellyplex",
+        "platform": "linux",
+        "categories": [
+          "Video",
+          "TV",
+          "Movies",
+          "Media",
+          "Live",
+          "Entertainment",
+          "Automation"
+        ],
+        "description": "Sync watched between jellyfin and plex locally.",
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/jellyplex/.env",
+            "container": "/app/.env"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/jellyplex/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Language Tool",
+        "name": "languagetool",
+        "platform": "linux",
+        "categories": [
+          "Tools",
+          "Productivity"
+        ],
+        "description": "LanguageTool is an AI-based spelling, style, and grammar checker that helps correct or paraphrase texts across languages.",
+        "logo": "https://languagetool.org/images/logo_color.svg",
+        "ports": [
+          "8050:8010"
+        ],
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "langtool_languageModel",
+            "label": "langtool_languageModel",
+            "default": "/ngrams"
+          },
+          {
+            "name": "Java_Xms",
+            "label": "Java_Xms",
+            "default": "512m"
+          },
+          {
+            "name": "Java_Xms",
+            "label": "Java_Xms",
+            "default": "1g"
+          }
+        ],
+        "volumes": [
+          {
+            "bind": "/apps/ngrams",
+            "container": "/ngrams"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/language-tool/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Magic Mirror",
+        "name": "magicmirror",
+        "platform": "linux",
+        "categories": [
+          "Tools",
+          "Other"
+        ],
+        "description": "The open source modular smart mirror platform.",
+        "logo": "https://github.com/MagicMirrorOrg/MagicMirror/blob/master/.github/header.png",
+        "ports": [
+          "6500:8080"
+        ],
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/magicmirror/config",
+            "container": "opt/magic_mirror/config"
+          },
+          {
+            "bind": "/apps/magicmirror/modules",
+            "container": "/config"
+          },
+          {
+            "bind": "/apps/magicmirror/config",
+            "container": "/config"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/magicmirror/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Navidrome",
+        "name": "navidrome",
+        "platform": "linux",
+        "categories": [
+          "Music",
+          "Media"
+        ],
+        "description": "Navidrome is a free and open source software that lets you enjoy your music collection from anywhere, through a web UI and mobile apps. It supports various formats, large libraries, transcode on the fly, and Subsonic API compatibility.",
+        "logo": "https://github.com/navidrome/navidrome/raw/master/resources/logo-192x192.png",
+        "ports": [
+          "2020:4533"
+        ],
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "ND_SCANSCHEDULE",
+            "label": "ND_SCANSCHEDULE",
+            "default": "24H"
+          },
+          {
+            "name": "NG_LOGLEVEL",
+            "label": "NG_LOGLEVEL",
+            "default": "info"
+          },
+          {
+            "name": "ND_SESSIONTIMEOUT",
+            "label": "ND_SESSIONTIMEOUT",
+            "default": "24H"
+          }
+        ],
+        "volumes": [
+          {
+            "bind": "/apps/navidrome/data",
+            "container": "/data"
+          },
+          {
+            "bind": "/apps/navidrome/music",
+            "container": "/music:ro"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/navidrome/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Nginx",
+        "name": "nginx",
+        "platform": "linux",
+        "categories": [
+          "Tools",
+          "Proxy"
+        ],
+        "description": "Nginx Proxy Manager v2 with Sqlite enables you to easily forward to your websites running at home or otherwise, including free SSL, without having to know too much about Nginx or Letsencrypt.  Please see the install document at https://github.com/pi-hosted/pi-hosted/tree/master/docs installing the template.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/proxy_mgr.png",
+        "ports": [
+          "80:80",
+          "81:81",
+          "443:443"
+        ],
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "PUID",
+            "label": "PUID",
+            "default": "1000"
+          },
+          {
+            "name": "PGID",
+            "label": "PGID",
+            "default": "1000"
+          },
+          {
+            "name": "TZ",
+            "label": "TZ",
+            "default": "America/Phoenix"
+          }
+        ],
+        "volumes": [
+          {
+            "bind": "/apps/nginx/data",
+            "container": "/data"
+          },
+          {
+            "bind": "/apps/nginx/letsencrypt",
+            "container": "/etc/letsencrypt"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/nginx/docker-compose.yml"
+        }
+      },
+      {
+        "type": 3,
+        "title": "Ntfy",
+        "name": "ntfy",
+        "platform": "linux",
+        "categories": [
+          "Tools",
+          "Other"
+        ],
+        "description": "Allows you to send notifications to your phone or desktop via scripts from any computer, and/or using a REST API.",
+        "logo": "https://raw.githubusercontent.com/binwiederhier/ntfy/main/web/public/static/images/ntfy.png",
+        "ports": [
+          "5500:80"
+        ],
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/ntfy/data",
+            "container": "/etc/ntfy"
+          },
+          {
+            "bind": "/apps/ntfy/cache",
+            "container": "/var/cache/ntfy"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/ntfy/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Ollama",
+        "name": "ollama",
+        "platform": "linux",
+        "categories": [
+          "Tools",
+          "Other"
+        ],
+        "description": "Run Llama 3, Phi 3, Mistral, Gemma, and other models. Customize and create your own. Interact with models using the open webui platform.",
+        "logo": "https://ollama.com/public/ollama.png",
+        "restart_policy": "unless-stopped",
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/ollama/docker-compose.yml"
+        }
+      },
+      {
+        "type": 3,
+        "title": "Paperless-ngx",
+        "name": "paperless-ngx",
+        "platform": "linux",
+        "categories": [
+          "Cloud",
+          "Management",
+          "Productivity",
+          "Document"
+        ],
+        "description": "Paperless-ngx is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.  Paperless-ngx forked from paperless-ng to continue the great work and distribute responsibility of supporting and advancing the project among a team of people. Consider joining us! Discussion of this transition can be found in issues #1599 and #1632.  A demo is available at demo.paperless-ngx.com using login demo / demo. Note: demo content is reset frequently and confidential information should not be uploaded.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/paperless.png",
+        "restart_policy": "unless-stopped",
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/ollama/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Playwright",
+        "name": "playwright",
+        "platform": "linux",
+        "categories": [
+          "Development",
+          "Testing"
+        ],
+        "description": "Playwright enables reliable end-to-end testing for modern web apps.",
+        "logo": "https://playwright.dev/img/playwright-logo.svg",
+        "ports": [
+          "3333:3000"
+        ],
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "TOKEN",
+            "label": "TOKEN",
+            "default": ""
+          },
+          {
+            "name": "CONCURRENT",
+            "label": "CONCURRENT",
+            "default": "10"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/playwright/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Plex",
+        "name": "Plex",
+        "platform": "linux",
+        "categories": [
+          "Video",
+          "TV",
+          "Movies",
+          "Media",
+          "Live",
+          "Entertainment"
+        ],
+        "description": "Your favorite movies, TV, music, web shows, podcasts, and more, all streamed to your favorite screens.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/plex-icon.png",
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "VERSION",
+            "label": "VERSION",
+            "default": "latest"
+          },
+          {
+            "name": "PGID",
+            "label": "PGID",
+            "default": "1000"
+          },
+          {
+            "name": "PUID",
+            "label": "PUID",
+            "default": "1000"
+          }
+        ],
+        "volumes": [
+          {
+            "bind": "/apps/plex/config",
+            "container": "/config"
+          },
+          {
+            "bind": "/apps/plex/movies",
+            "container": "/movies"
+          },
+          {
+            "bind": "/apps/plex/tv",
+            "container": "/tv"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/plex/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Stirling PDF",
+        "name": "stirling",
+        "platform": "linux",
+        "categories": [
+          "Documents",
+          "Productivity",
+          "Tools"
+        ],
+        "description": "#1 Locally hosted web application that allows you to perform various operations on PDF files.",
+        "logo": "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png",
+        "ports": [
+          "8500:8080"
+        ],
+        "restart_policy": "unless-stopped",
+        "env": [
+          {
+            "name": "DOCKER_ENABLE_SECURITY",
+            "label": "DOCKER_ENABLE_SECURITY",
+            "default": "false"
+          },
+          {
+            "name": "INSTALL_BOOK_AND_ADVANCED_HTML_OPS",
+            "label": "INSTALL_BOOK_AND_ADVANCED_HTML_OPS",
+            "default": "false"
+          }
+        ],
+        "volumes": [
+          {
+            "bind": "/apps/stirling/configs",
+            "container": "/configs"
+          },
+          {
+            "bind": "/apps/strling/data",
+            "container": "/usr/share/tessdata"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/stirling/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Vault Warden",
+        "name": "vaultwarden",
+        "platform": "linux",
+        "categories": [
+          "Tools",
+          "Security"
+        ],
+        "description": "This is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/bitwarden.png",
+        "ports": [
+          "3012:3012/tcp",
+          "9000:80/tcp"
+        ],
+        "restart_policy": "unless-stopped",
+        "volumes": [
+          {
+            "bind": "/apps/vaultwarden/data",
+            "container": "/data"
+          }
+        ],
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/vaultwarden/docker-compose.yml"
+        }
+      },
+      {
+        "type": 1,
+        "title": "Whoogle",
+        "name": "whoogle",
+        "platform": "linux",
+        "categories": [
+          "Other",
+          "Tools"
+        ],
+        "description": "Self-hosted, ad-free, privacy-respecting Google metasearch engine.",
+        "logo": "https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/whoogle.png",
+        "ports": [
+          "5500:5000"
+        ],
+        "restart_policy": "unless-stopped",
+        "repository": {
+          "url": "https://gitlab.com/MrRubenAnaya/homelab",
+          "stackfile": "stacks/whoogle/docker-compose.yml"
+        }
+      }
+    ]
+  }
